@@ -2,6 +2,10 @@
 
 Free and easy-to-use online PDF tools that make you more productive.
 
+**Live Demo:** [https://pdf-tools-production-7595.up.railway.app](https://pdf-tools-production-7595.up.railway.app/)
+
+![Deploy on Railway](https://railway.com/button.svg)
+
 ## Features
 
 - **Sign PDF** - Add your signature to any PDF document
@@ -14,10 +18,12 @@ Free and easy-to-use online PDF tools that make you more productive.
 ## Tech Stack
 
 ### Backend
+
 - **PHP 8.5**
 - **Laravel 12** - PHP framework
 
 ### Frontend
+
 - **React 19** - UI library
 - **Inertia.js v2** - Modern monolith architecture
 - **TypeScript** - Type safety
@@ -25,6 +31,7 @@ Free and easy-to-use online PDF tools that make you more productive.
 - **Tailwind CSS 4** - Utility-first CSS framework
 
 ### Development Tools
+
 - **Vite 7** - Build tool
 - **Pest 4** - Testing framework
 - **Laravel Pint** - Code style fixer
@@ -34,6 +41,7 @@ Free and easy-to-use online PDF tools that make you more productive.
 ## Installation
 
 ### Prerequisites
+
 - PHP 8.5+
 - Composer
 - Node.js 20+
@@ -42,32 +50,38 @@ Free and easy-to-use online PDF tools that make you more productive.
 ### Setup
 
 1. Clone the repository
+
 ```bash
 git clone https://github.com/FloFlo-L/pdf-tools.git
 cd pdf-tools
 ```
 
 2. Install PHP dependencies
+
 ```bash
 composer install
 ```
 
 3. Install Node.js dependencies
+
 ```bash
 npm install
 ```
 
 4. Copy the environment file
+
 ```bash
 cp .env.example .env
 ```
 
 5. Generate application key
+
 ```bash
 php artisan key:generate
 ```
 
 6. Build frontend assets
+
 ```bash
 npm run build
 ```
@@ -75,11 +89,13 @@ npm run build
 ## Development
 
 Start the development server:
+
 ```bash
 composer run dev
 ```
 
 Or run separately:
+
 ```bash
 # Terminal 1 - Laravel server
 php artisan serve
