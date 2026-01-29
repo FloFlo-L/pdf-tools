@@ -9,14 +9,9 @@ export default function Footer() {
       </Title>
       <p>© {new Date().getFullYear()} PDF Tools. All rights reserved.</p>
       <p className="flex items-center justify-center gap-2">
-        <PiGithubLogo className="text-lg" />
+        <PiGithubLogo className="text-xl" />
         Made by{' '}
-        <a
-          href="https://github.com/FloFlo-L/pdf-tools"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:text-primary-200"
-        >
+        <a href="https://github.com/FloFlo-L/pdf-tools" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary-200">
           Florian Lescribaa
         </a>
       </p>

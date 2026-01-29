@@ -6,3 +6,5 @@
   @import '@mantine/core/styles.layer.css';
 }
 @import 'tailwind-preset-mantine';
+@import '@mantine/dropzone/styles.css';
+@import '@mantine/dates/styles.css';
