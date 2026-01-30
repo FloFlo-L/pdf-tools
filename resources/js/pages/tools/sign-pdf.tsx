@@ -76,7 +76,7 @@ export default function SignPdf() {
           </div>
 
           <div ref={signButtonRef} className="text-center">
-            <Button onClick={handleConfirmSign} loading={isLoading} disabled={elements.length === 0}>
+            <Button onClick={handleConfirmSign} loading={isLoading} disabled={elements.length === 0} leftSection={<PiSignature size={18} />}>
               {t('sign_button')}
             </Button>
           </div>
@@ -125,6 +125,7 @@ export default function SignPdf() {
 
       {step === 'sign' && (
         <StickyBottomButton visible={!isSignButtonVisible} onClick={handleConfirmSign} loading={isLoading} disabled={elements.length === 0}>
+          <PiSignature size={18} className="mr-2 inline" />
           {t('sign_button')}
         </StickyBottomButton>
       )}
