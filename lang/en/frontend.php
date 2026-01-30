@@ -16,6 +16,12 @@ return [
     'coming_soon' => 'Coming soon',
     'use_another_tool' => 'Use another tool',
 
+    // Page header features
+    'feature_free' => 'Free',
+    'feature_online' => 'Online',
+    'feature_no_limits' => 'No limits',
+    'feature_secure' => 'Secure',
+
     // Footer
     'all_rights_reserved' => 'All rights reserved.',
     'made_by' => 'Made by',

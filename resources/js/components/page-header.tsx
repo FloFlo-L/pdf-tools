@@ -1,6 +1,8 @@
 import { Text, Title } from '@mantine/core';
 import type { ComponentType } from 'react';
 import { PiCheck } from 'react-icons/pi';
+import { useTranslation } from '@/hooks/use-translation';
+import type { Translations } from '@/types';
 
 type PageHeaderProps = {
   title: string;
@@ -8,9 +10,11 @@ type PageHeaderProps = {
   icon?: ComponentType<{ className?: string }>;
 };
 
-const features = ['Free', 'Online', 'No limits', 'Secure'];
+const featureKeys: (keyof Translations)[] = ['feature_free', 'feature_online', 'feature_no_limits', 'feature_secure'];
 
 export default function PageHeader({ title, description, icon: Icon }: PageHeaderProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-2 text-center">
       <Title order={2} mb="sm">
@@ -18,11 +22,11 @@ export default function PageHeader({ title, description, icon: Icon }: PageHeade
         {title}
       </Title>
       {description && <Text c="dimmed">{description}</Text>}
-      <div className="mt-4 flex justify-center gap-4">
-        {features.map((feature, index) => (
-          <Text size="md" fw={500} key={`feature-${index}`}>
+      <div className="mt-4 flex flex-wrap justify-center gap-4">
+        {featureKeys.map((key) => (
+          <Text size="md" fw={500} key={key}>
             <PiCheck className="mr-1 inline text-green-500" />
-            {feature}
+            {t(key)}
           </Text>
         ))}
       </div>

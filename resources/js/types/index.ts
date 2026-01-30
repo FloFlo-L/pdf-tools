@@ -14,6 +14,10 @@ export type Translations = {
     tool_convert_to_jpg: string;
     coming_soon: string;
     use_another_tool: string;
+    feature_free: string;
+    feature_online: string;
+    feature_no_limits: string;
+    feature_secure: string;
     all_rights_reserved: string;
     made_by: string;
 };

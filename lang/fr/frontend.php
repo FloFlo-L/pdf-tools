@@ -16,6 +16,12 @@ return [
     'coming_soon' => 'Bientôt disponible',
     'use_another_tool' => 'Utiliser un autre outil',
 
+    // Page header features
+    'feature_free' => 'Gratuit',
+    'feature_online' => 'En ligne',
+    'feature_no_limits' => 'Sans limites',
+    'feature_secure' => 'Sécurisé',
+
     // Footer
     'all_rights_reserved' => 'Tous droits réservés.',
     'made_by' => 'Créé par',
