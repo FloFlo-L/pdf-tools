@@ -18,6 +18,8 @@ export type Translations = {
     feature_online: string;
     feature_no_limits: string;
     feature_secure: string;
+    dropzone_drag: string;
+    dropzone_max_size: string;
     all_rights_reserved: string;
     made_by: string;
 };

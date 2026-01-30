@@ -2,8 +2,11 @@ import { Group, Text } from '@mantine/core';
 import type { DropzoneProps } from '@mantine/dropzone';
 import { Dropzone, PDF_MIME_TYPE } from '@mantine/dropzone';
 import { PiFilePdf, PiUpload, PiX } from 'react-icons/pi';
+import { useTranslation } from '@/hooks/use-translation';
 
 export default function DropZone(props: Partial<DropzoneProps>) {
+  const { t } = useTranslation();
+
   return (
     <Dropzone
       loading={false}
@@ -26,10 +29,10 @@ export default function DropZone(props: Partial<DropzoneProps>) {
 
         <div>
           <Text size="xl" inline>
-            Drag PDF here or click to select file
+            {t('dropzone_drag')}
           </Text>
           <Text size="sm" c="dimmed" inline mt={7}>
-            File should not exceed 50mb
+            {t('dropzone_max_size')}
           </Text>
         </div>
       </Group>

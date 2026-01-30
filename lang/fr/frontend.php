@@ -22,6 +22,10 @@ return [
     'feature_no_limits' => 'Sans limites',
     'feature_secure' => 'Sécurisé',
 
+    // Dropzone
+    'dropzone_drag' => 'Glissez un PDF ici ou cliquez pour sélectionner',
+    'dropzone_max_size' => 'Le fichier ne doit pas dépasser 50 Mo',
+
     // Footer
     'all_rights_reserved' => 'Tous droits réservés.',
     'made_by' => 'Créé par',
