@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignPdfRequest;
-use App\Http\Requests\UploadPdfRequest;
+use App\Services\PdfService;
 use App\Services\PdfSignerService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,20 +12,16 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class SignPdfController extends Controller
 {
-    public function __construct(public PdfSignerService $pdfSigner) {}
-
-    public function upload(UploadPdfRequest $request): JsonResponse
-    {
-        $result = $this->pdfSigner->upload($request->file('file'));
-
-        return response()->json($result);
-    }
+    public function __construct(
+        public PdfService $pdfService,
+        public PdfSignerService $pdfSigner,
+    ) {}
 
     public function sign(SignPdfRequest $request): JsonResponse
     {
         $validated = $request->validated();
 
-        if (! $this->pdfSigner->exists($validated['id'])) {
+        if (! $this->pdfService->exists($validated['id'])) {
             return response()->json(['error' => 'PDF not found'], 404);
         }
 
@@ -45,12 +41,5 @@ class SignPdfController extends Controller
         $filename = $request->query('filename', 'signed_document.pdf');
 
         return response()->download($path, $filename);
-    }
-
-    public function destroy(string $id): JsonResponse
-    {
-        $this->pdfSigner->delete($id);
-
-        return response()->json(['deleted' => true]);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Services\PdfConverterService;
+use App\Services\PdfService;
 use App\Services\PdfSignerService;
 use Illuminate\Console\Command;
 
@@ -11,12 +13,16 @@ class CleanupTempPdfs extends Command
 
     protected $description = 'Cleanup temporary PDF files older than the given duration';
 
-    public function handle(PdfSignerService $pdfSigner): int
+    public function handle(PdfService $pdfService, PdfSignerService $pdfSigner, PdfConverterService $pdfConverter): int
     {
         $minutes = (int) $this->option('minutes');
-        $count = $pdfSigner->cleanupOlderThan($minutes);
 
-        $this->info("Cleaned up {$count} temporary file(s).");
+        $uploadCount = $pdfService->cleanupOlderThan($minutes);
+        $signedCount = $pdfSigner->cleanupOlderThan($minutes);
+        $convertedCount = $pdfConverter->cleanupOlderThan($minutes);
+
+        $total = $uploadCount + $signedCount + $convertedCount;
+        $this->info("Cleaned up {$total} temporary file(s).");
 
         return Command::SUCCESS;
     }

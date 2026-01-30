@@ -21,7 +21,7 @@ export default function DownloadPanel({ pdfId, originalFilename, onReset }: Down
     setError(null);
 
     try {
-      const response = await fetch(`/api/pdf/${pdfId}/download?filename=${encodeURIComponent(signedFilename)}`);
+      const response = await fetch(`/api/pdf/${pdfId}/sign-download?filename=${encodeURIComponent(signedFilename)}`);
 
       if (!response.ok) {
         const data = await response.json().catch(() => ({}));

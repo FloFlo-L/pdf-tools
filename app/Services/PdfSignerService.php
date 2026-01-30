@@ -2,45 +2,16 @@
 
 namespace App\Services;
 
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use setasign\Fpdi\Fpdi;
 
 class PdfSignerService
 {
     private string $tempDisk = 'local';
 
-    private string $uploadPath = 'temp/uploads';
-
     private string $signedPath = 'temp/signed';
 
-    /**
-     * Store uploaded PDF and return metadata.
-     *
-     * @return array{id: string, pageCount: int, width: float, height: float}
-     */
-    public function upload(UploadedFile $file): array
-    {
-        $id = Str::uuid()->toString();
-        $filename = $id.'.pdf';
-
-        Storage::disk($this->tempDisk)->putFileAs($this->uploadPath, $file, $filename);
-
-        $pdf = new Fpdi;
-        $path = Storage::disk($this->tempDisk)->path($this->uploadPath.'/'.$filename);
-        $pageCount = $pdf->setSourceFile($path);
-
-        $templateId = $pdf->importPage(1);
-        $size = $pdf->getTemplateSize($templateId);
-
-        return [
-            'id' => $id,
-            'pageCount' => $pageCount,
-            'width' => $size['width'],
-            'height' => $size['height'],
-        ];
-    }
+    public function __construct(public PdfService $pdfService) {}
 
     /**
      * Sign PDF with provided elements (signatures, text, dates).
@@ -49,9 +20,9 @@ class PdfSignerService
      */
     public function sign(string $id, array $elements): string
     {
-        $sourcePath = Storage::disk($this->tempDisk)->path($this->uploadPath.'/'.$id.'.pdf');
+        $sourcePath = $this->pdfService->getPath($id);
 
-        if (! file_exists($sourcePath)) {
+        if (! $sourcePath) {
             throw new \Exception('PDF not found');
         }
 
@@ -174,38 +145,31 @@ class PdfSignerService
     }
 
     /**
-     * Check if original PDF exists.
+     * Delete signed PDF files for an ID.
      */
-    public function exists(string $id): bool
+    public function cleanup(string $id): void
     {
-        return Storage::disk($this->tempDisk)->exists($this->uploadPath.'/'.$id.'.pdf');
-    }
-
-    /**
-     * Delete all files related to an ID.
-     */
-    public function delete(string $id): void
-    {
-        Storage::disk($this->tempDisk)->delete($this->uploadPath.'/'.$id.'.pdf');
         Storage::disk($this->tempDisk)->delete($this->signedPath.'/'.$id.'_signed.pdf');
     }
 
     /**
-     * Cleanup files older than given minutes.
+     * Cleanup signed files older than given minutes.
      */
     public function cleanupOlderThan(int $minutes = 60): int
     {
         $count = 0;
         $threshold = now()->subMinutes($minutes)->timestamp;
 
-        foreach ([$this->uploadPath, $this->signedPath] as $path) {
-            $files = Storage::disk($this->tempDisk)->files($path);
+        if (! Storage::disk($this->tempDisk)->exists($this->signedPath)) {
+            return $count;
+        }
 
-            foreach ($files as $file) {
-                if (Storage::disk($this->tempDisk)->lastModified($file) < $threshold) {
-                    Storage::disk($this->tempDisk)->delete($file);
-                    $count++;
-                }
+        $files = Storage::disk($this->tempDisk)->files($this->signedPath);
+
+        foreach ($files as $file) {
+            if (Storage::disk($this->tempDisk)->lastModified($file) < $threshold) {
+                Storage::disk($this->tempDisk)->delete($file);
+                $count++;
             }
         }
 
