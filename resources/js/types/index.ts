@@ -13,6 +13,7 @@ export type Translations = {
     tool_convert_to_png: string;
     tool_convert_to_jpg: string;
     coming_soon: string;
+    use_another_tool: string;
     all_rights_reserved: string;
     made_by: string;
 };

@@ -1,6 +1,7 @@
 import { ActionIcon, Button, Card, Drawer, ScrollArea, Stack } from '@mantine/core';
 import { useDisclosure, useIntersection, useMediaQuery } from '@mantine/hooks';
 import { PiArrowCounterClockwise, PiDownloadSimple, PiScissors } from 'react-icons/pi';
+import BackToTools from '@/components/back-to-tools';
 import DropZone from '@/components/drop-zone';
 import PageHeader from '@/components/page-header';
 import ProcessingProgress from '@/components/processing-progress';
@@ -46,7 +47,12 @@ export default function SplitPdf() {
 
       {error && <div className="rounded-md bg-red-50 p-4 text-center text-red-600">{error}</div>}
 
-      {step === 'upload' && <DropZone onDrop={handleFileDrop} loading={isLoading} />}
+      {step === 'upload' && (
+        <>
+          <DropZone onDrop={handleFileDrop} loading={isLoading} />
+          <BackToTools />
+        </>
+      )}
 
       {step === 'configure' && file && pdfInfo && (
         <div className="space-y-8">

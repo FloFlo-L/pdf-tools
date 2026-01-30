@@ -14,6 +14,7 @@ return [
     'tool_convert_to_png' => 'Convertir en PNG',
     'tool_convert_to_jpg' => 'Convertir en JPG',
     'coming_soon' => 'Bientôt disponible',
+    'use_another_tool' => 'Utiliser un autre outil',
 
     // Footer
     'all_rights_reserved' => 'Tous droits réservés.',

@@ -2,6 +2,7 @@ import { Button, Stack } from '@mantine/core';
 import { useIntersection } from '@mantine/hooks';
 import { useState } from 'react';
 import { PiArrowCounterClockwise, PiDownloadSimple, PiImage } from 'react-icons/pi';
+import BackToTools from '@/components/back-to-tools';
 import PdfThumbnails from '@/components/convert/pdf-thumbnails';
 import DropZone from '@/components/drop-zone';
 import PageHeader from '@/components/page-header';
@@ -43,7 +44,12 @@ export default function ConvertJpg() {
 
       {error && <div className="rounded-md bg-red-50 p-4 text-center text-red-600">{error}</div>}
 
-      {step === 'upload' && <DropZone onDrop={handleFileDrop} loading={isLoading} />}
+      {step === 'upload' && (
+        <>
+          <DropZone onDrop={handleFileDrop} loading={isLoading} />
+          <BackToTools />
+        </>
+      )}
 
       {step === 'preview' && file && pdfInfo && (
         <div className="space-y-8">

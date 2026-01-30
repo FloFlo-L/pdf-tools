@@ -28,7 +28,7 @@ export default function ListTools() {
   const cols = { mobile: 2, desktop: 3 };
 
   return (
-    <div className="relative mx-auto my-6 max-w-screen-xl border-t border-neutral-200 lg:border-x dark:border-neutral-700">
+    <div className="relative mx-auto my-6 max-w-6xl border-t border-neutral-200 lg:border-x dark:border-neutral-700">
       <div className="grid grid-cols-2 md:grid-cols-3">
         {tools.map((tool, index) => {
           const isLastColMobile = (index + 1) % cols.mobile === 0;
@@ -51,7 +51,7 @@ export default function ListTools() {
           return (
             <a
               key={tool.slug}
-              className={`group relative flex flex-col items-center gap-2 border-b border-neutral-200 p-4 py-6 md:px-3 lg:p-8 dark:border-neutral-700 ${isLastColMobile ? '' : 'border-r'} ${isLastColDesktop ? 'md:border-r-0' : 'md:border-r'} ${!tool.enable ? 'pointer-events-none cursor-not-allowed opacity-50' : ''}`}
+              className={`group relative flex flex-col items-center gap-2 border-b border-neutral-200 p-4 py-7 md:px-3 lg:p-8 dark:border-neutral-700 ${isLastColMobile ? '' : 'border-r'} ${isLastColDesktop ? 'md:border-r-0' : 'md:border-r'} ${!tool.enable ? 'pointer-events-none cursor-not-allowed opacity-50' : ''}`}
               href={tool.enable ? `/tools/${tool.slug}` : undefined}
               aria-disabled={!tool.enable}
               style={disabledStyle}
