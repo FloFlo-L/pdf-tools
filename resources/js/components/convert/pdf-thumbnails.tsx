@@ -1,4 +1,4 @@
-import { Card, Checkbox, LoadingOverlay, SimpleGrid, Text } from '@mantine/core';
+import { Card, Checkbox, LoadingOverlay, SimpleGrid, Text, useMantineColorScheme } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
@@ -15,6 +15,8 @@ type PdfThumbnailsProps = {
 
 export default function PdfThumbnails({ file, numPages, selectedPages, onSelectionChange }: PdfThumbnailsProps) {
   const [pdfLoaded, setPdfLoaded] = useState(false);
+  const { colorScheme } = useMantineColorScheme();
+  const stripeColor = colorScheme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)';
 
   // Select all pages by default when component mounts
   useEffect(() => {
@@ -64,8 +66,7 @@ export default function PdfThumbnails({ file, numPages, selectedPages, onSelecti
 
               const diagonalStyle = !isSelected
                 ? {
-                    backgroundImage:
-                      'repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(0,0,0,0.08) 4px, rgba(0,0,0,0.08) 5px)',
+                    backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 4px, ${stripeColor} 4px, ${stripeColor} 5px)`,
                   }
                 : {};
 
