@@ -1,5 +1,6 @@
 import { Button, Group, Radio, Stack, TextInput } from '@mantine/core';
 import { useState } from 'react';
+import { useTranslation } from '@/hooks/use-translation';
 
 const FONTS = [
   { value: "'Times New Roman', serif", label: 'Times New Roman' },
@@ -12,6 +13,7 @@ type SignatureTextPadProps = {
 };
 
 export default function SignatureTextPad({ onSignature }: SignatureTextPadProps) {
+  const { t } = useTranslation();
   const [text, setText] = useState('');
   const [selectedFont, setSelectedFont] = useState(FONTS[0].value);
 
@@ -24,7 +26,7 @@ export default function SignatureTextPad({ onSignature }: SignatureTextPadProps)
   return (
     <div className="space-y-3">
       <TextInput
-        placeholder="Type your text..."
+        placeholder={t('sign_type_text')}
         value={text}
         onChange={(e) => setText(e.currentTarget.value)}
         size="md"
@@ -47,12 +49,12 @@ export default function SignatureTextPad({ onSignature }: SignatureTextPadProps)
         className="flex min-h-24 items-center justify-center rounded-md border border-gray-300 bg-white p-4"
         style={{ fontFamily: selectedFont, fontStyle: 'italic' }}
       >
-        <span className="text-2xl text-gray-800">{text || 'Your text preview'}</span>
+        <span className="text-2xl text-gray-800">{text || t('sign_text_preview')}</span>
       </div>
 
       <Group justify="flex-end">
         <Button size="sm" onClick={handleApply} disabled={!text.trim()}>
-          Apply
+          {t('sign_apply')}
         </Button>
       </Group>
     </div>

@@ -10,9 +10,11 @@ import DownloadPanel from '@/components/sign-pdf/download-panel';
 import PdfPreview from '@/components/sign-pdf/pdf-preview';
 import SignaturePad from '@/components/sign-pdf/signature-pad';
 import StickyBottomButton from '@/components/sticky-bottom-button';
+import { useTranslation } from '@/hooks/use-translation';
 import { useSignPdf } from '@/hooks/use-sign-pdf';
 
 export default function SignPdf() {
+  const { t } = useTranslation();
   const {
     step,
     uploadedFile,
@@ -42,7 +44,7 @@ export default function SignPdf() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-8 px-4">
-      <PageHeader icon={PiSignature} title="Sign PDF" description="Add your signature to any PDF document" />
+      <PageHeader icon={PiSignature} title={t('sign_title')} description={t('sign_description')} />
 
       {error && <div className="rounded-md bg-red-50 p-4 text-center text-red-600">{error}</div>}
 
@@ -75,7 +77,7 @@ export default function SignPdf() {
 
           <div ref={signButtonRef} className="text-center">
             <Button onClick={handleConfirmSign} loading={isLoading} disabled={elements.length === 0}>
-              Sign
+              {t('sign_button')}
             </Button>
           </div>
 
@@ -99,7 +101,7 @@ export default function SignPdf() {
                 <FaPencilAlt size={16} />
               </ActionIcon>
 
-              <Drawer opened={drawerOpened} onClose={closeDrawer} title="Add elements" position="right" size="100%" padding="md">
+              <Drawer opened={drawerOpened} onClose={closeDrawer} title={t('sign_add_elements')} position="right" size="100%" padding="md">
                 <SignaturePad onSignatureCreate={onElementCreate} />
               </Drawer>
             </>
@@ -110,8 +112,8 @@ export default function SignPdf() {
       {step === 'signing' && (
         <ProcessingProgress
           onComplete={handleAnimationComplete}
-          title="Signing your document..."
-          description="Please wait while we apply your signature"
+          title={t('sign_signing')}
+          description={t('sign_signing_description')}
           icon={PiPencilLine}
           isApiComplete={signingComplete}
         />
@@ -123,7 +125,7 @@ export default function SignPdf() {
 
       {step === 'sign' && (
         <StickyBottomButton visible={!isSignButtonVisible} onClick={handleConfirmSign} loading={isLoading} disabled={elements.length === 0}>
-          Sign
+          {t('sign_button')}
         </StickyBottomButton>
       )}
     </div>

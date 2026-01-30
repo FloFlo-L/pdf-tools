@@ -1,5 +1,6 @@
 import { Tabs } from '@mantine/core';
 import { PiCalendar, PiPencilSimple, PiTextT } from 'react-icons/pi';
+import { useTranslation } from '@/hooks/use-translation';
 import type { SignatureColor, SignatureData } from '@/types/sign-pdf';
 import SignatureDatePad from './signature-date-pad';
 import SignatureDrawPad from './signature-draw-pad';
@@ -10,6 +11,7 @@ type SignaturePadProps = {
 };
 
 export default function SignaturePad({ onSignatureCreate }: SignaturePadProps) {
+  const { t } = useTranslation();
   const handleDrawSignature = (dataUrl: string, color: SignatureColor) => {
     onSignatureCreate({
       type: 'draw',
@@ -38,13 +40,13 @@ export default function SignaturePad({ onSignatureCreate }: SignaturePadProps) {
     <Tabs defaultValue="draw">
       <Tabs.List grow>
         <Tabs.Tab value="draw" leftSection={<PiPencilSimple size={16} />}>
-          Draw
+          {t('sign_tab_draw')}
         </Tabs.Tab>
         <Tabs.Tab value="text" leftSection={<PiTextT size={16} />}>
-          Text
+          {t('sign_tab_text')}
         </Tabs.Tab>
         <Tabs.Tab value="date" leftSection={<PiCalendar size={16} />}>
-          Date
+          {t('sign_tab_date')}
         </Tabs.Tab>
       </Tabs.List>
 

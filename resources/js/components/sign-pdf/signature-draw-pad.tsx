@@ -1,14 +1,16 @@
 import { ActionIcon, Button, Group, Tooltip } from '@mantine/core';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { PiEraser } from 'react-icons/pi';
+import { useTranslation } from '@/hooks/use-translation';
+import type { Translations } from '@/types';
 import type { SignatureColor } from '@/types/sign-pdf';
 
-const SIGNATURE_COLORS: { value: SignatureColor; label: string }[] = [
-  { value: '#000000', label: 'Black' },
-  { value: '#4a4a4a', label: 'Dark Gray' },
-  { value: '#1971c2', label: 'Blue' },
-  { value: '#c92a2a', label: 'Red' },
-  { value: '#2f9e44', label: 'Green' },
+const SIGNATURE_COLORS: { value: SignatureColor; labelKey: keyof Translations }[] = [
+  { value: '#000000', labelKey: 'sign_color_black' },
+  { value: '#4a4a4a', labelKey: 'sign_color_dark_gray' },
+  { value: '#1971c2', labelKey: 'sign_color_blue' },
+  { value: '#c92a2a', labelKey: 'sign_color_red' },
+  { value: '#2f9e44', labelKey: 'sign_color_green' },
 ];
 
 type SignatureDrawPadProps = {
@@ -16,6 +18,7 @@ type SignatureDrawPadProps = {
 };
 
 export default function SignatureDrawPad({ onSignature }: SignatureDrawPadProps) {
+  const { t } = useTranslation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [hasDrawn, setHasDrawn] = useState(false);
@@ -149,7 +152,7 @@ export default function SignatureDrawPad({ onSignature }: SignatureDrawPadProps)
 
         <Group gap="xs">
           {SIGNATURE_COLORS.map((c) => (
-            <Tooltip key={c.value} label={c.label} withArrow>
+            <Tooltip key={c.value} label={t(c.labelKey)} withArrow>
               <ActionIcon
                 variant={color === c.value ? 'filled' : 'outline'}
                 size="sm"
@@ -169,7 +172,7 @@ export default function SignatureDrawPad({ onSignature }: SignatureDrawPadProps)
       </Group>
 
       <Button size="sm" onClick={handleApply} disabled={!hasDrawn} fullWidth>
-        Apply Signature
+        {t('sign_apply_signature')}
       </Button>
     </div>
   );

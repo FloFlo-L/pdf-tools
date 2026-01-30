@@ -2,6 +2,7 @@ import { Alert, Button, Stack } from '@mantine/core';
 import { useState } from 'react';
 import { PiArrowCounterClockwise, PiDownloadSimple, PiWarning } from 'react-icons/pi';
 import ProcessingSuccess from '@/components/processing-success';
+import { useTranslation } from '@/hooks/use-translation';
 
 type DownloadPanelProps = {
   pdfId: string;
@@ -10,6 +11,7 @@ type DownloadPanelProps = {
 };
 
 export default function DownloadPanel({ pdfId, originalFilename, onReset }: DownloadPanelProps) {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasDownloaded, setHasDownloaded] = useState(false);
@@ -47,10 +49,10 @@ export default function DownloadPanel({ pdfId, originalFilename, onReset }: Down
   };
 
   return (
-    <ProcessingSuccess title="PDF signed successfully!" description="Your document has been signed and is ready to download.">
+    <ProcessingSuccess title={t('sign_success')} description={t('sign_success_description')}>
       <Stack gap="sm" className="w-full">
         <Button size="md" leftSection={<PiDownloadSimple size={20} />} onClick={handleDownload} loading={isLoading} fullWidth>
-          {hasDownloaded ? 'Download Again' : 'Download Signed PDF'}
+          {hasDownloaded ? t('sign_download_again') : t('sign_download')}
         </Button>
 
         {error && (
@@ -60,7 +62,7 @@ export default function DownloadPanel({ pdfId, originalFilename, onReset }: Down
         )}
 
         <Button size="md" variant="light" leftSection={<PiArrowCounterClockwise size={20} />} onClick={onReset} fullWidth>
-          Sign Another PDF
+          {t('sign_another')}
         </Button>
       </Stack>
     </ProcessingSuccess>

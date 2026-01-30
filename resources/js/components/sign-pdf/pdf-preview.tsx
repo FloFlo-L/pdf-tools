@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
+import { useTranslation } from '@/hooks/use-translation';
 import type { PdfInfo } from '@/types/pdf';
 import type { SignatureElement, SignaturePosition } from '@/types/sign-pdf';
 import SignatureOverlay from './signature-overlay';
@@ -20,6 +21,7 @@ type PdfPreviewProps = {
 };
 
 export default function PdfPreview({ file, pdfInfo, elements, onElementUpdate, onElementDelete }: PdfPreviewProps) {
+  const { t } = useTranslation();
   const [containerRef, containerRect] = useResizeObserver();
   const [pdfLoaded, setPdfLoaded] = useState(false);
 
@@ -36,7 +38,7 @@ export default function PdfPreview({ file, pdfInfo, elements, onElementUpdate, o
         loading={<div className="h-96" />}
         error={
           <div className="flex h-96 items-center justify-center">
-            <div className="text-red-500">Failed to load PDF</div>
+            <div className="text-red-500">{t('sign_failed_load')}</div>
           </div>
         }
       >
