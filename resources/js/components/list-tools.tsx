@@ -14,7 +14,7 @@ export default function ListTools() {
     { name: 'Merge PDF', icon: <PiGitMerge />, slug: 'merge-pdf', enable: false },
     { name: 'Split PDF', icon: <PiScissors />, slug: 'split-pdf', enable: false },
     { name: 'Compress PDF', icon: <PiFileArrowDown />, slug: 'compress-pdf', enable: false },
-    { name: 'Convert to PNG', icon: <PiImage />, slug: 'convert-to-png', enable: false },
+    { name: 'Convert to PNG', icon: <PiImage />, slug: 'convert-to-png', enable: true },
     { name: 'Convert to JPG', icon: <PiImage />, slug: 'convert-to-jpg', enable: false },
   ];
 
