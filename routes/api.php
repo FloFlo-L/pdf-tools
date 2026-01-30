@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ConvertPdfController;
 use App\Http\Controllers\Api\PdfController;
 use App\Http\Controllers\Api\SignPdfController;
+use App\Http\Controllers\Api\SplitPdfController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('pdf')->group(function () {
@@ -18,4 +19,8 @@ Route::prefix('pdf')->group(function () {
     Route::post('/convert-to-png', [ConvertPdfController::class, 'convertToPng'])->name('pdf.convert-to-png');
     Route::post('/convert-to-jpg', [ConvertPdfController::class, 'convertToJpg'])->name('pdf.convert-to-jpg');
     Route::get('/{id}/convert-download', [ConvertPdfController::class, 'download'])->name('pdf.convert-download');
+
+    // Split PDF
+    Route::post('/split', [SplitPdfController::class, 'split'])->name('pdf.split');
+    Route::get('/{id}/split-download', [SplitPdfController::class, 'download'])->name('pdf.split-download');
 });

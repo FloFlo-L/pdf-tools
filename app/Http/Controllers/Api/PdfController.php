@@ -7,6 +7,7 @@ use App\Http\Requests\UploadPdfRequest;
 use App\Services\PdfConverterService;
 use App\Services\PdfService;
 use App\Services\PdfSignerService;
+use App\Services\PdfSplitterService;
 use Illuminate\Http\JsonResponse;
 
 class PdfController extends Controller
@@ -15,6 +16,7 @@ class PdfController extends Controller
         public PdfService $pdfService,
         public PdfSignerService $pdfSigner,
         public PdfConverterService $pdfConverter,
+        public PdfSplitterService $pdfSplitter,
     ) {}
 
     public function upload(UploadPdfRequest $request): JsonResponse
@@ -29,6 +31,7 @@ class PdfController extends Controller
         $this->pdfService->delete($id);
         $this->pdfSigner->cleanup($id);
         $this->pdfConverter->cleanup($id);
+        $this->pdfSplitter->cleanup($id);
 
         return response()->json(['deleted' => true]);
     }
