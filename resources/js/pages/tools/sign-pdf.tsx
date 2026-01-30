@@ -76,7 +76,7 @@ export default function SignPdf() {
           {isMobile && (
             <>
               <ActionIcon
-                size="lg"
+                size="38"
                 radius="xl"
                 variant="filled"
                 onClick={openDrawer}
