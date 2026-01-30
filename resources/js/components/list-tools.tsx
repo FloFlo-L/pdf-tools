@@ -1,21 +1,28 @@
+import { useMantineColorScheme } from '@mantine/core';
 import type { JSX } from 'react';
 import { PiFileArrowDown, PiGitMerge, PiImage, PiScissors, PiSignature } from 'react-icons/pi';
+import { useTranslation } from '@/hooks/use-translation';
+import type { Translations } from '@/types';
 
 export default function ListTools() {
+  const { t } = useTranslation();
+  const { colorScheme } = useMantineColorScheme();
+  const stripeColor = colorScheme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.05)';
+
   interface Tool {
-    name: string;
+    nameKey: keyof Translations;
     icon: JSX.Element;
     slug: string;
     enable: boolean;
   }
 
   const tools: Tool[] = [
-    { name: 'Sign PDF', icon: <PiSignature />, slug: 'sign-pdf', enable: true },
-    { name: 'Merge PDF', icon: <PiGitMerge />, slug: 'merge-pdf', enable: false },
-    { name: 'Split PDF', icon: <PiScissors />, slug: 'split-pdf', enable: false },
-    { name: 'Compress PDF', icon: <PiFileArrowDown />, slug: 'compress-pdf', enable: false },
-    { name: 'Convert to PNG', icon: <PiImage />, slug: 'convert-to-png', enable: true },
-    { name: 'Convert to JPG', icon: <PiImage />, slug: 'convert-to-jpg', enable: true },
+    { nameKey: 'tool_sign_pdf', icon: <PiSignature />, slug: 'sign-pdf', enable: true },
+    { nameKey: 'tool_merge_pdf', icon: <PiGitMerge />, slug: 'merge-pdf', enable: false },
+    { nameKey: 'tool_split_pdf', icon: <PiScissors />, slug: 'split-pdf', enable: true },
+    { nameKey: 'tool_compress_pdf', icon: <PiFileArrowDown />, slug: 'compress-pdf', enable: false },
+    { nameKey: 'tool_convert_to_png', icon: <PiImage />, slug: 'convert-to-png', enable: true },
+    { nameKey: 'tool_convert_to_jpg', icon: <PiImage />, slug: 'convert-to-jpg', enable: true },
   ];
 
   const cols = { mobile: 2, desktop: 3 };
@@ -37,7 +44,7 @@ export default function ListTools() {
 
           const disabledStyle = !tool.enable
             ? {
-                backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(0,0,0,0.05) 4px, rgba(0,0,0,0.05) 5px)',
+                backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 4px, ${stripeColor} 4px, ${stripeColor} 5px)`,
               }
             : {};
 
@@ -50,8 +57,8 @@ export default function ListTools() {
               style={disabledStyle}
             >
               <span className="text-2xl">{tool.icon}</span>
-              <p className="text-lg font-medium">{tool.name}</p>
-              {!tool.enable && <span className="text-xs text-neutral-500">Coming soon</span>}
+              <p className="text-lg font-medium">{t(tool.nameKey)}</p>
+              {!tool.enable && <span className="text-xs text-neutral-500">{t('coming_soon')}</span>}
 
               {/* Decorative cross element - mobile (2 cols) - top */}
               {showCrossMobile && (
