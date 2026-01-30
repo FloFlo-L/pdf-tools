@@ -2,7 +2,14 @@ import { useCallback, useEffect, useState } from 'react';
 import type { ConvertedFile, ConvertStep } from '@/types/convert';
 import type { PdfInfo } from '@/types/pdf';
 
-export function useConvertToPng() {
+type ConvertFormat = 'png' | 'jpg';
+
+type UseConvertOptions = {
+  format: ConvertFormat;
+  quality?: number;
+};
+
+export function useConvert({ format, quality = 85 }: UseConvertOptions) {
   const [step, setStep] = useState<ConvertStep>('upload');
   const [file, setFile] = useState<File | null>(null);
   const [pdfInfo, setPdfInfo] = useState<PdfInfo | null>(null);
@@ -11,6 +18,8 @@ export function useConvertToPng() {
   const [error, setError] = useState<string | null>(null);
   const [conversionComplete, setConversionComplete] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
+
+  const formatUpper = format.toUpperCase();
 
   // Cleanup on unmount or when navigating away
   useEffect(() => {
@@ -80,17 +89,23 @@ export function useConvertToPng() {
       setStep('converting');
 
       try {
-        const response = await fetch('/api/pdf/convert-to-png', {
+        const body: Record<string, unknown> = {
+          id: pdfInfo.id,
+          pages: selectedPages,
+          filename: file.name,
+        };
+
+        if (format === 'jpg') {
+          body.quality = quality;
+        }
+
+        const response = await fetch(`/api/pdf/convert-to-${format}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
           },
-          body: JSON.stringify({
-            id: pdfInfo.id,
-            pages: selectedPages,
-            filename: file.name,
-          }),
+          body: JSON.stringify(body),
         });
 
         if (!response.ok) {
@@ -108,7 +123,7 @@ export function useConvertToPng() {
         setIsLoading(false);
       }
     },
-    [pdfInfo, file],
+    [pdfInfo, file, format, quality],
   );
 
   const handleAnimationComplete = useCallback(() => {
@@ -161,6 +176,8 @@ export function useConvertToPng() {
     isLoading,
     error,
     conversionComplete,
+    format,
+    formatUpper,
     handleFileDrop,
     handleConvert,
     handleAnimationComplete,
