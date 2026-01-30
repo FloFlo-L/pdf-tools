@@ -1,9 +1,11 @@
+import { LoadingOverlay } from '@mantine/core';
 import { useResizeObserver } from '@mantine/hooks';
 import { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
-import type { PdfInfo, SignatureElement, SignaturePosition } from '@/types/sign-pdf';
+import type { PdfInfo } from '@/types/pdf';
+import type { SignatureElement, SignaturePosition } from '@/types/sign-pdf';
 import SignatureOverlay from './signature-overlay';
 
 // Configure PDF.js worker
@@ -27,14 +29,11 @@ export default function PdfPreview({ file, pdfInfo, elements, onElementUpdate, o
 
   return (
     <div ref={containerRef} className="relative w-full">
+      <LoadingOverlay visible={!pdfLoaded} zIndex={10} overlayProps={{ blur: 2 }} />
       <Document
         file={file}
         onLoadSuccess={() => setPdfLoaded(true)}
-        loading={
-          <div className="flex h-96 items-center justify-center">
-            <div className="text-gray-500">Loading PDF...</div>
-          </div>
-        }
+        loading={<div className="h-96" />}
         error={
           <div className="flex h-96 items-center justify-center">
             <div className="text-red-500">Failed to load PDF</div>

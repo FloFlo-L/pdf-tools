@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { PdfInfo, SignatureData, SignatureElement, SignaturePosition, SignStep } from '@/types/sign-pdf';
+import type { PdfInfo } from '@/types/pdf';
+import type { SignatureData, SignatureElement, SignaturePosition, SignStep } from '@/types/sign-pdf';
 
 const getDefaultPosition = (type: SignatureData['type']): SignaturePosition => {
   const basePosition = { page: 1 };
@@ -162,6 +163,7 @@ export function useSignPdf() {
     elements,
     isLoading,
     error,
+    signingComplete,
 
     // Handlers
     handleFileDrop,
