@@ -19,6 +19,7 @@ export default function SignPdf() {
     elements,
     isLoading,
     error,
+    signingComplete,
     handleFileDrop,
     handleElementCreate,
     handleElementUpdate,
@@ -106,6 +107,7 @@ export default function SignPdf() {
           title="Signing your document..."
           description="Please wait while we apply your signature"
           icon={PiPencilLine}
+          isApiComplete={signingComplete}
         />
       )}
 
