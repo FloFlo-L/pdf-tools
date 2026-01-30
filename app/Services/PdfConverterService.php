@@ -22,6 +22,28 @@ class PdfConverterService
      */
     public function convertToPng(string $id, array $pages, string $originalFilename): array
     {
+        return $this->convert($id, $pages, $originalFilename, 'png');
+    }
+
+    /**
+     * Convert PDF pages to JPG.
+     *
+     * @param  array<int>  $pages
+     * @return array{id: string, type: 'jpg'|'zip', filename: string}
+     */
+    public function convertToJpg(string $id, array $pages, string $originalFilename, int $quality = 85): array
+    {
+        return $this->convert($id, $pages, $originalFilename, 'jpg', $quality);
+    }
+
+    /**
+     * Convert PDF pages to specified format.
+     *
+     * @param  array<int>  $pages
+     * @return array{id: string, type: string, filename: string}
+     */
+    private function convert(string $id, array $pages, string $originalFilename, string $format, int $quality = 90): array
+    {
         $pdfPath = Storage::disk($this->tempDisk)->path($this->uploadPath.'/'.$id.'.pdf');
 
         if (! file_exists($pdfPath)) {
@@ -33,37 +55,43 @@ class PdfConverterService
         $baseName = pathinfo($originalFilename, PATHINFO_FILENAME);
         $convertedFiles = [];
 
-        // Convert each selected page
         foreach ($pages as $pageNumber) {
             $imagick = new Imagick;
             $imagick->setResolution(200, 200);
             $imagick->readImage($pdfPath.'['.($pageNumber - 1).']');
-            $imagick->setImageFormat('png');
-            $imagick->setImageCompressionQuality(90);
 
-            $pngFilename = $baseName.'_page'.$pageNumber.'.png';
-            $pngPath = Storage::disk($this->tempDisk)->path($this->convertedPath.'/'.$id.'_'.$pngFilename);
+            if ($format === 'jpg') {
+                $imagick->setImageFormat('jpeg');
+                $imagick->setImageBackgroundColor('white');
+                $imagick->setImageAlphaChannel(Imagick::ALPHACHANNEL_REMOVE);
+                $imagick = $imagick->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
+            } else {
+                $imagick->setImageFormat($format);
+            }
 
-            $imagick->writeImage($pngPath);
+            $imagick->setImageCompressionQuality($quality);
+
+            $outputFilename = $baseName.'_page'.$pageNumber.'.'.$format;
+            $outputPath = Storage::disk($this->tempDisk)->path($this->convertedPath.'/'.$id.'_'.$outputFilename);
+
+            $imagick->writeImage($outputPath);
             $imagick->clear();
             $imagick->destroy();
 
             $convertedFiles[] = [
-                'path' => $pngPath,
-                'filename' => $pngFilename,
+                'path' => $outputPath,
+                'filename' => $outputFilename,
             ];
         }
 
-        // Single page: return PNG info
         if (count($convertedFiles) === 1) {
             return [
                 'id' => $id,
-                'type' => 'png',
+                'type' => $format,
                 'filename' => $convertedFiles[0]['filename'],
             ];
         }
 
-        // Multiple pages: create ZIP
         $zipFilename = $baseName.'.zip';
         $zipPath = Storage::disk($this->tempDisk)->path($this->convertedPath.'/'.$id.'_'.$zipFilename);
 
@@ -78,7 +106,6 @@ class PdfConverterService
 
         $zip->close();
 
-        // Clean up individual PNG files after zipping
         foreach ($convertedFiles as $file) {
             @unlink($file['path']);
         }

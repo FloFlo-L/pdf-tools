@@ -12,7 +12,7 @@ class ConvertPdfController extends Controller
 {
     public function __construct(public PdfConverterService $converter) {}
 
-    public function convert(Request $request): JsonResponse
+    public function convertToPng(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'id' => ['required', 'string'],
@@ -26,6 +26,30 @@ class ConvertPdfController extends Controller
                 $validated['id'],
                 $validated['pages'],
                 $validated['filename']
+            );
+
+            return response()->json($result);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
+
+    public function convertToJpg(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'id' => ['required', 'string'],
+            'pages' => ['required', 'array', 'min:1'],
+            'pages.*' => ['integer', 'min:1'],
+            'filename' => ['required', 'string'],
+            'quality' => ['sometimes', 'integer', 'min:1', 'max:100'],
+        ]);
+
+        try {
+            $result = $this->converter->convertToJpg(
+                $validated['id'],
+                $validated['pages'],
+                $validated['filename'],
+                $validated['quality'] ?? 85
             );
 
             return response()->json($result);
@@ -48,7 +72,11 @@ class ConvertPdfController extends Controller
             return response()->json(['error' => 'File not found'], 404);
         }
 
-        $mimeType = str_ends_with($filename, '.zip') ? 'application/zip' : 'image/png';
+        $mimeType = match (true) {
+            str_ends_with($filename, '.zip') => 'application/zip',
+            str_ends_with($filename, '.jpg') => 'image/jpeg',
+            default => 'image/png',
+        };
 
         return response()->download($path, $filename, [
             'Content-Type' => $mimeType,

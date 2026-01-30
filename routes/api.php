@@ -14,7 +14,8 @@ Route::prefix('pdf')->group(function () {
     Route::post('/sign', [SignPdfController::class, 'sign'])->name('pdf.sign');
     Route::get('/{id}/sign-download', [SignPdfController::class, 'download'])->name('pdf.sign-download');
 
-    // Convert PDF to PNG
-    Route::post('/convert-to-png', [ConvertPdfController::class, 'convert'])->name('pdf.convert-to-png');
+    // Convert PDF
+    Route::post('/convert-to-png', [ConvertPdfController::class, 'convertToPng'])->name('pdf.convert-to-png');
+    Route::post('/convert-to-jpg', [ConvertPdfController::class, 'convertToJpg'])->name('pdf.convert-to-jpg');
     Route::get('/{id}/convert-download', [ConvertPdfController::class, 'download'])->name('pdf.convert-download');
 });
