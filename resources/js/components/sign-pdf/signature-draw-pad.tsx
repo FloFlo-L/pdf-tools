@@ -133,7 +133,7 @@ export default function SignatureDrawPad({ onSignature }: SignatureDrawPadProps)
 
   return (
     <div className="space-y-3">
-      <div className="rounded-md border border-gray-300 bg-white">
+      <div className="rounded-md border border-neutral-200 bg-[var(--mantine-color-gray-0)] dark:border-neutral-700 dark:bg-[var(--mantine-color-dark-8)]">
         <canvas
           ref={canvasRef}
           className="w-full cursor-crosshair touch-none"

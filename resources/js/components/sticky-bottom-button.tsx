@@ -14,7 +14,7 @@ export default function StickyBottomButton({ visible, onClick, loading, disabled
 
   return (
     <div className="md:mx-auto md:max-w-6xl md:px-4" style={{ position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 50 }}>
-      <div className="border-t border-gray-200 bg-white px-4 pt-2 pb-4 md:border-r md:border-l">
+      <div className="border-t border-neutral-200 bg-body px-4 py-4 md:border-r md:border-l dark:border-neutral-700">
         <Button onClick={onClick} loading={loading} disabled={disabled} fullWidth>
           {children}
         </Button>
