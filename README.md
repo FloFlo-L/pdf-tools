@@ -1,44 +1,48 @@
-# PDF Tools
+# 📄 PDF Tools
 
 Free and easy-to-use online PDF tools that make you more productive.
 
-**Live Demo:** [https://pdf-tools-production-7595.up.railway.app](https://pdf-tools-production-7595.up.railway.app/)
+**🌐 Live Demo:** [https://pdf-tools-production-7595.up.railway.app](https://pdf-tools-production-7595.up.railway.app/)
 
 ![Deploy on Railway](https://railway.com/button.svg)
 
-## Features
+## ✨ Features
 
-- **Sign PDF** - Add your signature to any PDF document
-- **Merge PDF** - Combine multiple PDF files into one (coming soon)
-- **Split PDF** - Split a PDF into multiple files (coming soon)
-- **Compress PDF** - Reduce the size of your PDF files (coming soon)
-- **Convert to PNG** - Convert PDF pages to PNG images (coming soon)
-- **Convert to JPG** - Convert PDF pages to JPG images (coming soon)
+- ✍️ **Sign PDF** - Add your signature to any PDF document
+- 🔀 **Merge PDF** - Combine multiple PDF files into one (coming soon)
+- ✂️ **Split PDF** - Split a PDF into multiple files (coming soon)
+- 🗜️ **Compress PDF** - Reduce the size of your PDF files (coming soon)
+- 🖼️ **Convert to PNG** - Convert PDF pages to PNG images (coming soon)
+- 📷 **Convert to JPG** - Convert PDF pages to JPG images (coming soon)
 
-## Tech Stack
+## 🌍 Internationalization
+
+Translations are handled via Laravel's built-in lang files (`lang/en`, `lang/fr`) shared to the frontend through Inertia.js props and consumed with a custom `useTranslation` hook.
+
+## 🛠️ Tech Stack
 
 ### Backend
 
-- **PHP 8.5**
-- **Laravel 12** - PHP framework
+- <img src="https://cdn.simpleicons.org/php" height="16" alt="PHP" /> **PHP 8.5**
+- <img src="https://cdn.simpleicons.org/laravel" height="16" alt="Laravel" /> **Laravel 12** - PHP framework
 
 ### Frontend
 
-- **React 19** - UI library
-- **Inertia.js v2** - Modern monolith architecture
-- **TypeScript** - Type safety
-- **Mantine 8** - React components library
-- **Tailwind CSS 4** - Utility-first CSS framework
+- <img src="https://cdn.simpleicons.org/react" height="16" alt="React" /> **React 19** - UI library
+- <img src="https://cdn.simpleicons.org/inertia" height="16" alt="Inertia.js" /> **Inertia.js v2** - Modern monolith architecture
+- <img src="https://cdn.simpleicons.org/typescript" height="16" alt="TypeScript" /> **TypeScript** - Type safety
+- <img src="https://cdn.simpleicons.org/mantine" height="16" alt="Mantine" /> **Mantine 8** - React components library
+- <img src="https://cdn.simpleicons.org/tailwindcss" height="16" alt="Tailwind CSS" /> **Tailwind CSS 4** - Utility-first CSS framework
 
 ### Development Tools
 
-- **Vite 7** - Build tool
-- **Pest 4** - Testing framework
-- **Laravel Pint** - Code style fixer
-- **ESLint** - JavaScript linter
-- **Prettier** - Code formatter
+- <img src="https://cdn.simpleicons.org/vite" height="16" alt="Vite" /> **Vite 7** - Build tool
+- 🧪 **Pest 4** - Testing framework
+- 🎯 **Laravel Pint** - Code style fixer
+- <img src="https://cdn.simpleicons.org/eslint" height="16" alt="ESLint" /> **ESLint** - JavaScript linter
+- <img src="https://cdn.simpleicons.org/prettier" height="16" alt="Prettier" /> **Prettier** - Code formatter
 
-## Installation
+## 🚀 Installation
 
 ### Prerequisites
 
@@ -86,7 +90,7 @@ php artisan key:generate
 npm run build
 ```
 
-## Development
+## 💻 Development
 
 Start the development server:
 
@@ -104,13 +108,13 @@ php artisan serve
 npm run dev
 ```
 
-## Testing
+## 🧪 Testing
 
 ```bash
 php artisan test
 ```
 
-## Code Formatting
+## 🎨 Code Formatting
 
 ```bash
 # PHP
@@ -121,10 +125,10 @@ npm run format
 npm run lint
 ```
 
-## Author
+## 👤 Author
 
 Made by [Florian Lescribaa](https://github.com/FloFlo-L)
 
-## License
+## 📝 License
 
-This project is open-sourced software.
+This project is open-sourced software licensed under the [MIT License](LICENSE.md).
